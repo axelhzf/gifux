@@ -17,7 +17,7 @@ const initialState = {
   },
   favorites: {
     isFetching: false,
-    data: {"fIENURRmYtunu": true},
+    data: {},
     error: undefined
   },
   notification: {
@@ -26,17 +26,33 @@ const initialState = {
   }
 };
 
+
+let storedState = {};
+try {
+  storedState = JSON.parse(window.localStorage.getItem("state"));
+} catch(e) {
+  
+}
+
+
 const store = createStore(
   reducer,
-  initialState,
+  _.merge(initialState, storedState),
   compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 
-store.subscribe(() => {
-  console.log("change state", store.getState())
-});
+store.subscribe(_.throttle(() => {
+  const state = store.getState();
+  const stateToStore = {
+    tabs: state.tabs,
+    favorites: {
+      data: state.favorites.data
+    }
+  };
+  window.localStorage.setItem("state", JSON.stringify(stateToStore));
+}, 1000));
 
 export default store;
