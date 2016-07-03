@@ -12,13 +12,11 @@ export default class GifList extends React.Component {
   render() {
     const {items} = this.props;
     const cbs = _.pick(this.props, "onToggleFav", "onCopy");
-    console.log(cbs);
     return (
       <div className="gif-list">
            {items.map((gif, index) => <GifPreview key={index} gif={gif} {...cbs} />)}
       </div>
     );
-    
   }
   
 }
