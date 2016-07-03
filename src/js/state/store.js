@@ -3,9 +3,7 @@ import reducer from "./reducer";
 import thunk from 'redux-thunk'
 
 const initialState = {
-  gifs: {
-    
-  },
+  gifs: {},
   search: {
     query: "",
     isFetching: false,
@@ -14,7 +12,7 @@ const initialState = {
   },
   favorites: {
     isFetching: false,
-    data: [],
+    data: {"fIENURRmYtunu": true},
     error: undefined
   }
 };

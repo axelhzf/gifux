@@ -6,11 +6,16 @@ import {connect} from "react-redux";
 import * as actions from "../state/actions";
 import LoadingIndicator from "../components/LoadingIndicator";
 import EmptyPlaceholder from "../components/EmptyPlaceholder";
+import ErrorMessage from "../components/ErrorMessage";
 
 class Search extends React.Component {
   
   onChangeQuery = query => {
     this.props.dispatch(actions.fetchSearch(query));
+  };
+  
+  onToggleFav = gif => {
+    this.props.dispatch(actions.toggleFav(gif.id));
   };
   
   render() {
@@ -22,9 +27,9 @@ class Search extends React.Component {
     } else if (isFetching) {
       content = <LoadingIndicator/>
     } else if (error) {
-      content = <ErrorMessage error={error}/>
+      content = <ErrorMessage msg={error}/>
     } else {
-      content = <GifList items={gifs}/>
+      content = <GifList items={gifs} onToggleFav={this.onToggleFav}/>
     }
     
     return (
@@ -40,10 +45,18 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => {
+  
+  const gifs = _.map(state.search.data, function (id) {
+    return {
+      isFavorite: state.favorites.data[id],
+      ...state.gifs[id]
+    };
+  });
+  
   return {
     query: state.search.query,
     isFetching: state.search.isFetching,
-    gifs: _.map(state.search.data, gifId => state.gifs[gifId]),
+    gifs,
     error: state.search.error
   }
 };

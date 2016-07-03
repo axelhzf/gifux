@@ -4,14 +4,15 @@ import GifPreview from "./GifPreview";
 export default class GifList extends React.Component {
   
   static propTypes = {
-    items: PropTypes.array.isRequired
+    items: PropTypes.array.isRequired,
+    onToggleFav: PropTypes.func
   };
   
   render() {
     const {items} = this.props;
     return (
       <div className="gif-list">
-           {items.map((gif, index) => <GifPreview key={index} gif={gif}/>)}
+           {items.map((gif, index) => <GifPreview key={index} gif={gif} onToggleFav={this.props.onToggleFav} />)}
       </div>
     );
     

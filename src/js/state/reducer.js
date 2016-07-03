@@ -18,7 +18,8 @@ export default function reducer(state, action) {
       });
     
     case actions.FETCH_SEARCH_SUCCESS:
-      const gifsById = _.keyBy(action.data, "id");
+      const gifs = _.map(action.data, (gif) => ({id: gif.id, url: gif.images.fixed_height.url}));
+      const gifsById = _.keyBy(gifs, "id");
       const ids = _.keys(gifsById);
       return update(state, {
         search: {
@@ -35,6 +36,18 @@ export default function reducer(state, action) {
           error: {$set: action.error.message}
         }
       });
+    
+    case actions.TOGGLE_FAVORITE:
+      const id = action.id;
+      const isFavorite = state.favorites.data[id];
+      return update(state, {
+        favorites: {
+          data: {
+            [id]: {$set: !isFavorite}
+          }
+        }
+      });
+    
   }
   
   return state;

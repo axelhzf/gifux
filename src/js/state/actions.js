@@ -5,26 +5,29 @@ export const FETCH_SEARCH_REQUEST = "FETCH_SEARCH_REQUEST";
 export const FETCH_SEARCH_SUCCESS = "FETCH_SEARCH_SUCCESS";
 export const FETCH_SEARCH_ERROR = "FETCH_SEARCH_ERROR";
 
-export const fetchSearch = (query) => async (dispatch) => {
+export const TOGGLE_FAVORITE = "TOGGLE_FAVORITE";
+
+export const fetchSearch = (query) => async(dispatch) => {
   try {
     dispatch({type: FETCH_SEARCH_REQUEST, query});
     
     /*
-    const url = `http://api.giphy.com/v1/gifs/search?q=${query}&api_key=dc6zaTOxFJmzC`;
-    const response = await fetch(url);
-    const body = await response.json();
-    */
-  
+     const url = `http://api.giphy.com/v1/gifs/search?q=${query}&api_key=dc6zaTOxFJmzC`;
+     const response = await fetch(url);
+     const body = await response.json();
+     */
     
-    await timeout(5000);
+    await timeout(500);
     
     const body = gifs;
     
     dispatch({type: FETCH_SEARCH_SUCCESS, data: body})
-  } catch(e) {
+  } catch (e) {
     dispatch({type: FETCH_SEARCH_ERROR, error: e});
   }
 };
+
+export const toggleFav = id => ({type: TOGGLE_FAVORITE, id});
 
 const timeout = (ms) => {
   return new Promise(resolve => {

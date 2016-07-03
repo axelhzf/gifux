@@ -40,7 +40,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    totalFavorites: state.favorites.data.length,
+    totalFavorites: _.keys(_.filter(state.favorites.data, k => k)).length,
   }
 };
 
