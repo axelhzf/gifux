@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware, compose} from "redux";
 import reducer from "./reducer";
 import thunk from 'redux-thunk'
+import {storeState, getStoredState} from "./localStorage";
 
 const initialState = {
   gifs: {
@@ -17,8 +18,9 @@ const initialState = {
   },
   favorites: {
     isFetching: false,
-    data: {},
-    error: undefined
+    error: undefined,
+    preset: {},
+    past: []
   },
   notification: {
     visible: false,
@@ -26,33 +28,24 @@ const initialState = {
   }
 };
 
-
-let storedState = {};
-try {
-  storedState = JSON.parse(window.localStorage.getItem("state"));
-} catch(e) {
-  
-}
-
-
 const store = createStore(
   reducer,
-  _.merge(initialState, storedState),
+  _.merge(initialState, getStoredState()),
   compose(
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 
+
 store.subscribe(_.throttle(() => {
   const state = store.getState();
-  const stateToStore = {
+  storeState({
     tabs: state.tabs,
     favorites: {
-      data: state.favorites.data
+      preset: state.favorites.preset
     }
-  };
-  window.localStorage.setItem("state", JSON.stringify(stateToStore));
+  });
 }, 1000));
 
 export default store;

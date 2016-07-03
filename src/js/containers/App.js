@@ -7,11 +7,20 @@ import _ from "lodash";
 import {connect} from "react-redux";
 import Notification from "../components/Notification";
 import * as actions from "../state/actions";
+import {mouseTrap} from "react-mousetrap"
 
 class App extends React.Component {
   
+  componentDidMount() {
+    this.props.bindShortcut(['command+z', 'ctrl+z'], this.onUndo);
+  }
+  
   onChangeTab = tab => {
     this.props.dispatch(actions.changeTab(tab));
+  };
+  
+  onUndo = () => {
+    this.props.dispatch(actions.undo());
   };
   
   render() {
@@ -22,13 +31,14 @@ class App extends React.Component {
     ];
     const toolbarItemsById = _.keyBy(toolbarItems, "id");
     const ActiveComponent = toolbarItemsById[activeTab].component;
+    
     return (
       <div className="app">
         <Header/>
         <div className="content">
-          {ActiveComponent}
+             {ActiveComponent}
         </div>
-        <Toolbar items={toolbarItems} active={activeTab} onChange={this.onChangeTab} />
+        <Toolbar items={toolbarItems} active={activeTab} onChange={this.onChangeTab}/>
         <Notification msg={notification.msg} visible={notification.visible}/>
       </div>
     )
@@ -40,8 +50,8 @@ const mapStateToProps = state => {
   return {
     activeTab: state.tabs.active,
     notification: state.notification,
-    totalFavorites: _.keys(state.favorites.data).length,
+    totalFavorites: _.keys(state.favorites.preset).length,
   }
 };
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(mouseTrap(App))
