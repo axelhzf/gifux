@@ -1,6 +1,6 @@
 import React from "react";
-import SearchBox from "./SearchBox";
-import GifList from "./GifList";
+import SearchBox from "../components/SearchBox";
+import GifList from "../components/GifList";
 
 export default class Search extends React.Component {
   
