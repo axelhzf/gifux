@@ -32,8 +32,31 @@
     }
   }
 
-  li.active a {
+  .active a {
     color: @pink;
+  }
+
+  span {
+    position: relative;
+  }
+
+  .badge {
+    font-size: 14px;
+    background-color: @white;
+    color: @darkBlue;
+    padding: 5px;
+    border-radius: 15px;
+    margin-left: 10px;
+    position: absolute;
+    bottom: -15px;
+    right: -25px;
+    font-weight: bold;
+    font-family: sans-serif;
+  }
+
+  .active .badge, a:hover .badge {
+    background-color: #ff6473;
+    color: #fff;
   }
 
 }

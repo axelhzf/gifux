@@ -7,7 +7,7 @@ import _ from "lodash";
 
 const toolbarItems = [
   {id: "search", iconClass: "fa fa-search", component: <Search/>},
-  {id: "favorite", iconClass: "fa fa-heart", component: <Favorite/>},
+  {id: "favorite", iconClass: "fa fa-heart", badge: "20", component: <Favorite/>},
 ];
 const toolbarItemsById = _.keyBy(toolbarItems, "id");
 

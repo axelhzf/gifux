@@ -18,10 +18,17 @@ export default class Toolbar extends React.Component {
   renderItem = (item) => {
     const {active, onChange} = this.props;
     const isActive = item.id === active;
+    let badge = null;
+    if(item.badge) {
+      badge = <div className="badge">{item.badge}</div>
+    }
+    
     return (
       <li key={item.id} className={classNames({active: isActive})}>
         <a href="#" onClick={() => onChange(item.id)}>
-          <i className={item.iconClass}/>
+          <span className={item.iconClass}>
+            {badge}
+          </span>
         </a>
       </li>
     )
