@@ -4,9 +4,9 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
   entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
-    path: "gh-pages/assets/",
+    path: "demo/",
     filename: "bundle.js",
-    publicPath: "/assets/"
+    publicPath: ""
   },
   module: {
     loaders: [
