@@ -1,9 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "../css/index.less";
+import App from "./components/App";
 
-function Hello() {
-  return <h1>Hello World</h1>;
-}
-
-ReactDOM.render(<Hello/>, document.getElementById("container"));
+ReactDOM.render(<App/>, document.getElementById("container"));
