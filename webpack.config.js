@@ -2,7 +2,7 @@ const autoprefixer = require("autoprefixer");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  entry: "./src/js/index.js",
+  entry: ["babel-polyfill", "./src/js/index.js"],
   output: {
     path: "gh-pages/assets/",
     filename: "bundle.js",

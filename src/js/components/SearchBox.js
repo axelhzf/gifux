@@ -3,12 +3,20 @@ import React, {PropTypes} from "react";
 export default class SearchBox extends React.Component {
   
   static propTypes = {
-    value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired
   };
   
-  onChange = (e) => {
-    this.props.onChange(e.target.value);
+  state = {
+    value: ""
+  };
+  
+  onChange = e => {
+    this.setState({value: e.target.value});
+  };
+  
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.onChange(this.state.value);
   };
   
   render() {
@@ -17,7 +25,9 @@ export default class SearchBox extends React.Component {
         <div className="search-icon">
           <i className="fa fa-search"/>
         </div>
-        <input type="text" placeholder="Search..." value={this.props.value} onChange={this.onChange}/>
+        <form onSubmit={this.onSubmit}>
+          <input type="text" placeholder="Search..." value={this.state.value} onChange={this.onChange}/>
+        </form>
       </div>
     )
   }

@@ -1,6 +1,15 @@
+import "../css/index.less";
+
 import React from "react";
 import ReactDOM from "react-dom";
-import "../css/index.less";
+import {Provider} from "react-redux";
 import App from "./containers/App";
+import store from "./state/store";
 
-ReactDOM.render(<App/>, document.getElementById("container"));
+const RootComponent = (
+  <Provider store={store}>
+    <App/>
+  </Provider>
+);
+
+ReactDOM.render(RootComponent, document.getElementById("container"));
