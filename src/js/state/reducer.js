@@ -53,7 +53,7 @@ export default function reducer(state, action) {
         favorites: {$merge: {isFetching: false}},
         gifs: {$merge: gifsById2}
       });
-  
+    
     case actions.FETCH_FAVORITES_ERROR:
       return update(state, {
         favorites: {
@@ -61,7 +61,6 @@ export default function reducer(state, action) {
           error: {$set: action.error.message}
         }
       });
-    
     
     case actions.TOGGLE_FAVORITE:
       const id = action.id;
@@ -73,6 +72,16 @@ export default function reducer(state, action) {
       return update(state, {
         favorites: {
           data: {$set: newValue}
+        }
+      });
+    
+    case actions.SHOW_NOTIFICATION:
+      return update(state, {
+        notification: {
+          $set: {
+            msg: action.msg,
+            visible: action.visible
+          }
         }
       });
     

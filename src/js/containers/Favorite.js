@@ -16,6 +16,10 @@ class Favorite extends React.Component {
     this.props.dispatch(actions.toggleFav(gif.id));
   };
   
+  onCopy = gif => {
+    this.props.dispatch(actions.showNotification(`Copied ${gif.url}`));
+  };
+  
   render() {
     const {gifs, isFetching, error} = this.props;
     let content;
@@ -26,7 +30,7 @@ class Favorite extends React.Component {
     } else if (gifs.length === 0) {
       content = <EmptyPlaceholder msg={"Search some gif to pin as favorite"}/>
     } else {
-      content = <GifList items={gifs} onToggleFav={this.onToggleFav}/>
+      content = <GifList items={gifs} onToggleFav={this.onToggleFav} onCopy={this.onCopy}/>
     }
     return (
       <div className="favorite">

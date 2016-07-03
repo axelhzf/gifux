@@ -1,25 +1,45 @@
 import React, {PropTypes} from "react";
 import classNames from "classnames";
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export default class GifPreview extends React.Component {
   
   static propTypes = {
-    onToggleFav: PropTypes.func
+    onToggleFav: PropTypes.func,
+    onCopy: PropTypes.func
   };
   
-  onClick = e => {
+  onToggleFav = e => {
     if (this.props.onToggleFav) {
       this.props.onToggleFav(this.props.gif);
+    }
+  };
+  
+  onCopy = e => {
+    if (this.props.onCopy) {
+      this.props.onCopy(this.props.gif)
     }
   };
   
   render() {
     const {gif} = this.props;
     
+    if (!gif.url) return null;
+    
     return (
-      <div className="gif-preview" onClick={this.onClick}>
+      <div className="gif-preview">
         <img src={gif.url}/>
-        <i className={classNames("fa", "fav", {"fa-heart": gif.isFavorite, "fa-heart-o": !gif.isFavorite})}/>
+        
+        <div className="fav" onClick={this.onToggleFav}>
+          <i className={classNames("fa", gif.isFavorite ? "fa-heart" : "fa-heart-o")}/>
+        </div>
+        
+        <CopyToClipboard text={gif.url} onCopy={this.onCopy}>
+          <div className="clipboard">
+            <i className="fa fa-clipboard"/>
+          </div>
+        </CopyToClipboard>
+      
       </div>
     );
   }

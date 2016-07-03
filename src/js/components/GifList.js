@@ -5,14 +5,17 @@ export default class GifList extends React.Component {
   
   static propTypes = {
     items: PropTypes.array.isRequired,
-    onToggleFav: PropTypes.func
+    onToggleFav: PropTypes.func,
+    onCopy: PropTypes.func
   };
   
   render() {
     const {items} = this.props;
+    const cbs = _.pick(this.props, "onToggleFav", "onCopy");
+    console.log(cbs);
     return (
       <div className="gif-list">
-           {items.map((gif, index) => <GifPreview key={index} gif={gif} onToggleFav={this.props.onToggleFav} />)}
+           {items.map((gif, index) => <GifPreview key={index} gif={gif} {...cbs} />)}
       </div>
     );
     

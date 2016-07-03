@@ -14,6 +14,10 @@ const initialState = {
     isFetching: false,
     data: {"fIENURRmYtunu": true},
     error: undefined
+  },
+  notification: {
+    visible: false,
+    msg: ""
   }
 };
 

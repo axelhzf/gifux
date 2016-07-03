@@ -3,11 +3,12 @@ import React, {PropTypes} from "react";
 export default class SearchBox extends React.Component {
   
   static propTypes = {
+    initialValue: PropTypes.string,
     onChange: PropTypes.func.isRequired
   };
   
   state = {
-    value: ""
+    value: this.props.initialValue
   };
   
   onChange = e => {

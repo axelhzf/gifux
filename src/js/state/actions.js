@@ -11,9 +11,15 @@ export const FETCH_FAVORITES_REQUEST = "FETCH_FAVORITES_REQUEST";
 export const FETCH_FAVORITES_SUCCESS = "FETCH_FAVORITES_SUCCESS";
 export const FETCH_FAVORITES_ERROR = "FETCH_FAVORITES_ERROR";
 
+export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
+
 export const fetchSearch = (query) => async(dispatch) => {
   try {
     dispatch({type: FETCH_SEARCH_REQUEST, query});
+    
+    if(query.trim().length === 0) {
+      return dispatch({type: FETCH_SEARCH_SUCCESS, data: []});
+    }
     
     const url = `http://api.giphy.com/v1/gifs/search?q=${query}&api_key=dc6zaTOxFJmzC`;
     const response = await fetch(url);
@@ -31,7 +37,7 @@ export const fetchFavorites = () => async(dispatch) => {
     
     const state = store.getState();
     const favoritesIds = _.keys(state.favorites.data);
-    const gifsToFetch = _.filter(favoritesIds, id => !state.gifs.id);
+    const gifsToFetch = _.filter(favoritesIds, id => !state.gifs[id]);
     
     if (gifsToFetch.length === 0) { // all ids already fetched
       return dispatch({type: FETCH_FAVORITES_SUCCESS, data: []});
@@ -48,6 +54,12 @@ export const fetchFavorites = () => async(dispatch) => {
 };
 
 export const toggleFav = id => ({type: TOGGLE_FAVORITE, id});
+
+export const showNotification = msg => async dispatch => {
+  dispatch({type: SHOW_NOTIFICATION, msg, visible: true});
+  await timeout(3000);
+  dispatch({type: SHOW_NOTIFICATION, msg, visible: false});
+};
 
 const timeout = (ms) => {
   return new Promise(resolve => {

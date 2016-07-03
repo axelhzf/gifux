@@ -1,6 +1,7 @@
 .gif-preview {
   height: 200px;
   position: relative;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -9,11 +10,25 @@
   }
 
   .fav {
-    position: absolute;
-    top: 9px;
-    right: 9px;
     color: @pink;
     font-size: 20px;
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 100%;
+  }
+
+  .clipboard {
+    color: @white;
+    font-size: 20px;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 100%;
   }
 
 }

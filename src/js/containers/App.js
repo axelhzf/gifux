@@ -5,6 +5,7 @@ import Search from "./Search";
 import Favorite from "./Favorite";
 import _ from "lodash";
 import {connect} from "react-redux";
+import Notification from "../components/Notification";
 
 class App extends React.Component {
   
@@ -18,7 +19,7 @@ class App extends React.Component {
   
   render() {
     const {activeToolbarItem} = this.state;
-    const {totalFavorites} = this.props;
+    const {totalFavorites, notification} = this.props;
     const toolbarItems = [
       {id: "search", iconClass: "fa fa-search", component: <Search/>},
       {id: "favorite", iconClass: "fa fa-heart", badge: `${totalFavorites}`, component: <Favorite/>},
@@ -32,6 +33,7 @@ class App extends React.Component {
           {ActiveComponent}
         </div>
         <Toolbar items={toolbarItems} active={activeToolbarItem} onChange={this.onChangePage} />
+        <Notification msg={notification.msg} visible={notification.visible}/>
       </div>
     )
   }
@@ -39,7 +41,9 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log("notification", state.notification);
   return {
+    notification: state.notification,
     totalFavorites: _.keys(state.favorites.data).length,
   }
 };
