@@ -6,33 +6,29 @@ import Favorite from "./Favorite";
 import _ from "lodash";
 import {connect} from "react-redux";
 import Notification from "../components/Notification";
+import * as actions from "../state/actions";
 
 class App extends React.Component {
   
-  state = {
-    activeToolbarItem: "search"
-  };
-  
-  onChangePage = page => {
-    this.setState({activeToolbarItem: page});
+  onChangeTab = tab => {
+    this.props.dispatch(actions.changeTab(tab));
   };
   
   render() {
-    const {activeToolbarItem} = this.state;
-    const {totalFavorites, notification} = this.props;
+    const {totalFavorites, notification, activeTab} = this.props;
     const toolbarItems = [
       {id: "search", iconClass: "fa fa-search", component: <Search/>},
       {id: "favorite", iconClass: "fa fa-heart", badge: `${totalFavorites}`, component: <Favorite/>},
     ];
     const toolbarItemsById = _.keyBy(toolbarItems, "id");
-    const ActiveComponent = toolbarItemsById[activeToolbarItem].component;
+    const ActiveComponent = toolbarItemsById[activeTab].component;
     return (
       <div className="app">
         <Header/>
         <div className="content">
           {ActiveComponent}
         </div>
-        <Toolbar items={toolbarItems} active={activeToolbarItem} onChange={this.onChangePage} />
+        <Toolbar items={toolbarItems} active={activeTab} onChange={this.onChangeTab} />
         <Notification msg={notification.msg} visible={notification.visible}/>
       </div>
     )
@@ -41,8 +37,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("notification", state.notification);
   return {
+    activeTab: state.tabs.active,
     notification: state.notification,
     totalFavorites: _.keys(state.favorites.data).length,
   }

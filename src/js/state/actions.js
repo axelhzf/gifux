@@ -13,6 +13,8 @@ export const FETCH_FAVORITES_ERROR = "FETCH_FAVORITES_ERROR";
 
 export const SHOW_NOTIFICATION = "SHOW_NOTIFICATION";
 
+export const CHANGE_TAB = "CHANGE_TAB";
+
 export const fetchSearch = (query) => async(dispatch) => {
   try {
     dispatch({type: FETCH_SEARCH_REQUEST, query});
@@ -60,6 +62,8 @@ export const showNotification = msg => async dispatch => {
   await timeout(3000);
   dispatch({type: SHOW_NOTIFICATION, msg, visible: false});
 };
+
+export const changeTab = tab => ({type: CHANGE_TAB, tab: tab});
 
 const timeout = (ms) => {
   return new Promise(resolve => {

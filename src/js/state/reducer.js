@@ -84,7 +84,13 @@ export default function reducer(state, action) {
           }
         }
       });
-    
+  
+    case actions.CHANGE_TAB:
+      return update(state, {
+        tabs: {
+          active: {$set: action.tab}
+        }
+      });
   }
   
   return state;

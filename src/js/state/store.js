@@ -3,7 +3,12 @@ import reducer from "./reducer";
 import thunk from 'redux-thunk'
 
 const initialState = {
-  gifs: {},
+  gifs: {
+    
+  },
+  tabs: {
+    active: "search"
+  },
   search: {
     query: "",
     isFetching: false,
@@ -29,5 +34,9 @@ const store = createStore(
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
+
+store.subscribe(() => {
+  console.log("change state", store.getState())
+});
 
 export default store;
