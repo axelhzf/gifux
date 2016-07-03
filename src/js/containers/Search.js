@@ -23,7 +23,7 @@ class Search extends React.Component {
     
     let content;
     if (query.trim().length === 0) {
-      content = <EmptyPlaceholder msg="Search something..."/>
+      content = <EmptyPlaceholder msg="Search something like 'Adventure times' "/>
     } else if (isFetching) {
       content = <LoadingIndicator/>
     } else if (error) {
@@ -46,7 +46,7 @@ class Search extends React.Component {
 
 const mapStateToProps = state => {
   
-  const gifs = _.map(state.search.data, function (id) {
+  const gifs = _.map(state.search.data, id => {
     return {
       isFavorite: state.favorites.data[id],
       ...state.gifs[id]
@@ -59,6 +59,7 @@ const mapStateToProps = state => {
     gifs,
     error: state.search.error
   }
+  
 };
 
 export default connect(mapStateToProps)(Search)
