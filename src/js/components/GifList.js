@@ -1,19 +1,17 @@
-import React from "react";
+import React, {PropTypes} from "react";
 import GifPreview from "./GifPreview";
 
 export default class GifList extends React.Component {
   
+  static propTypes = {
+    items: PropTypes.array.isRequired
+  };
+  
   render() {
-    
-    const gifs = [
-      {url: "http://i.giphy.com/c4Nc0v0g15g9G.gif"},
-      {url: "http://i.giphy.com/YFkpsHWCsNUUo.gif"},
-      {url: "http://i.giphy.com/ap4yAHZJLAcVi.gif"}
-    ];
-    
+    const {items} = this.props;
     return (
       <div className="gif-list">
-           {gifs.map((gif, index) => <GifPreview key={index} gif={gif}/>)}
+           {items.map((gif, index) => <GifPreview key={index} gif={gif}/>)}
       </div>
     );
     

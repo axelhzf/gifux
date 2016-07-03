@@ -6,7 +6,7 @@ export default class GifPreview extends React.Component {
     const {gif} = this.props;
     return (
       <div className="gif-preview">
-        <img src={gif.url} />
+        <img src={gif.images.fixed_height.url} />
         <i className="fa fa-heart fav"/>
       </div>
     );
