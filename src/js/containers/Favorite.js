@@ -28,7 +28,7 @@ class Favorite extends React.Component {
     } else if (error) {
       content = <ErrorMessage msg={error}/>
     } else if (gifs.length === 0) {
-      content = <EmptyPlaceholder msg={"Search some gif to pin as favorite"}/>
+      content = <EmptyPlaceholder msg={"Search and mark some gifs as favorites"}/>
     } else {
       content = <GifList items={gifs} onToggleFav={this.onToggleFav} onCopy={this.onCopy}/>
     }
