@@ -4,14 +4,9 @@ import Header from "../components/Header";
 import Search from "./Search";
 import Favorite from "./Favorite";
 import _ from "lodash";
+import {connect} from "react-redux";
 
-const toolbarItems = [
-  {id: "search", iconClass: "fa fa-search", component: <Search/>},
-  {id: "favorite", iconClass: "fa fa-heart", badge: "20", component: <Favorite/>},
-];
-const toolbarItemsById = _.keyBy(toolbarItems, "id");
-
-export default class App extends React.Component {
+class App extends React.Component {
   
   state = {
     activeToolbarItem: "search"
@@ -23,6 +18,12 @@ export default class App extends React.Component {
   
   render() {
     const {activeToolbarItem} = this.state;
+    const {totalFavorites} = this.props;
+    const toolbarItems = [
+      {id: "search", iconClass: "fa fa-search", component: <Search/>},
+      {id: "favorite", iconClass: "fa fa-heart", badge: `${totalFavorites}`, component: <Favorite/>},
+    ];
+    const toolbarItemsById = _.keyBy(toolbarItems, "id");
     const ActiveComponent = toolbarItemsById[activeToolbarItem].component;
     return (
       <div className="app">
@@ -36,3 +37,11 @@ export default class App extends React.Component {
   }
   
 }
+
+const mapStateToProps = state => {
+  return {
+    totalFavorites: state.favorites.data.length,
+  }
+};
+
+export default connect(mapStateToProps)(App)
