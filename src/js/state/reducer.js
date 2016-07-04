@@ -34,15 +34,20 @@ export default function reducer(state, action) {
     case actions.FETCH_SEARCH_ERROR:
       return update(state, {
         search: {
-          isFetching: {$set: false},
-          error: {$set: action.error.message}
+          $merge: {
+            isFetching: false,
+            error: action.error.message
+          }
         }
       });
     
     case actions.FETCH_FAVORITES_REQUEST:
       return update(state, {
         favorites: {
-          $merge: {isFetching: true, error: undefined}
+          $merge: {
+            isFetching: true,
+            error: undefined
+          }
         }
       });
     
@@ -57,8 +62,10 @@ export default function reducer(state, action) {
     case actions.FETCH_FAVORITES_ERROR:
       return update(state, {
         favorites: {
-          isFetching: {$set: false},
-          error: {$set: action.error.message}
+          $merge: {
+            isFetching: false,
+            error: action.error.message
+          }
         }
       });
     
@@ -80,10 +87,13 @@ export default function reducer(state, action) {
     case actions.SHOW_NOTIFICATION:
       return update(state, {
         notification: {
-          $set: { msg: action.msg, visible: true}
+          $set: {
+            msg: action.msg,
+            visible: true
+          }
         }
       });
-  
+    
     case actions.HIDE_NOTIFICATION:
       return update(state, {
         notification: {
